@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - oooo5 armycheck</title>
+  
+  
+  
+  
+      <style>
+      
+html, body {
+  width: 100%; 
+  margin-left: auto; margin-right: auto;
+  text-align:center;
+  color:#333;
+  background: #3C37E6;
+  background: -webkit-linear-gradient(to left, #3C37E6 , #2126E0);
+  background: linear-gradient(to left, #3C37E6 , #2126E0);
+  -webkit-font-smoothing: antialiased;
+  justify-content: center;
+  display: table;
+  align-items: center;
+}
+@media screen and (max-width:768px) {
+  body {
+  }
+}
+h1 {
+  height: 100px;
+  margin-bottom:40px;
+}
+
+h1 span {
+  position: relative;
+  top: 20px;
+  display: inline-block;
+  animation: bounce .9s ease infinite alternate;
+  font-family: 'Titan One', cursive;
+  font-size: 80px;
+  color: white;
+  text-shadow: 0 1px 0 #C12636,
+               0 2px 0 #C12636,
+               0 3px 0 #C12636,
+               0 4px 0 #C12636,
+               0 5px 0 #C12636,
+               0 6px 0 transparent,
+               0 7px 0 transparent,
+               0 8px 0 transparent,
+               0 9px 0 transparent,
+               0 10px 10px rgba(0, 0, 0, .4);
+}
+
+h1 span:nth-child(2) { animation-delay: .1s; }
+h1 span:nth-child(3) { animation-delay: .2s; }
+h1 span:nth-child(4) { animation-delay: .3s; }
+h1 span:nth-child(5) { animation-delay: .4s; }
+h1 span:nth-child(6) { animation-delay: .5s; }
+h1 span:nth-child(7) { animation-delay: .6s; }
+h1 span:nth-child(8) { animation-delay: .7s; }
+
+@keyframes bounce {
+  100% {
+    top: -20px;
+    text-shadow: 0 1px 0 #C12636,
+                 0 2px 0 #C12636,
+                 0 3px 0 #C12636,
+                 0 4px 0 #C12636,
+                 0 5px 0 #C12636,
+                 0 6px 0 #C12636,
+                 0 7px 0 #C12636,
+                 0 8px 0 #C12636,
+                 0 9px 0 #C12636,
+                 0 50px 25px rgba(0, 0, 0, .2);
+  }
+}
+/*---------------------아래서부터 내가 코드 짠거다 2016.11.34*/
+.hide-a { margin: 0 auto; display: block; width: 390px; 
+  text-decoration:none;/* a 태그 아랫줄 없애는거*/
+}
+#playboard{
+  margin-top:40px;
+  margin-left:40px; margin-right:40px;
+    height:100%;
+    border: 10px solid #F0CF61;
+    text-align:center;
+    color:black;
+    background:#F0CF61;
+}
+#percent{
+  font-size:100px;
+  font-weight: normal;
+}
+#percentmark{
+  font-size:20px;
+      font-weight: 900;
+}
+#percent:hover {
+}
+
+#btns{
+  width:100%;
+}
+#scan{
+  width:100%;
+  font-size:27px;
+  text-align:right;
+  color:#333;
+}
+.ciclebtn{
+   width:100%;
+    list-style:none; /* li점 없애는거*/
+    padding-left: 0px;/* 옆에left 공간 */
+    cursor: pointer;/* 마우스 커서 */
+    text-align:center;
+    color:white;
+  
+ height:50px;
+ border-radius:25px;
+ -moz-border-radius : 25px;
+ -webkit-border-radius : 25px;
+ -ms-border-radius :25px;
+ -khtml-border-radius : 25px;
+ -o-border-radius :25px;
+ text-align:center;
+}
+@media screen and (min-width:600px) {/*600보다 큰화면일경우*/
+ #playboard{
+  margin-left:100px; margin-right:100px;
+  }
+  #scan{
+  font-size:50px;
+  }
+}/*screen and ------------*/
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  <title>ooooo5</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <a class="hide-a" href="http://www.ooooo5.com:8080/">
+  <h1>
+  <span>o</span>
+  <span>o</span>
+  <span>o</span>
+  <span>o</span>
+  <span>o</span>
+  <span>5</span>
+  </h1>
+  </a>
+</head>
+<body>
+  <div id="playboard" >
+ <div id="Armycheckboard">
+<input id="scan" type="text" placeholder="입대날짜 : 951108"><br>
+<label id="percent"></label><label id="percentmark"> %</label>
+<table id="information" style="display:none">
+<tr><td><label id="nowday" >전역 날</label></td><td><label id="endlb"></td></tr>
+<tr><td><label id="nowday" >총 일수</label></td><td><label id="totallb"></td></tr>
+<tr><td><label id="endday" >남은일수</label></td><td><label id="lb0"></td></tr>
+<tr><td><label id="nowday" >복무일수</label></td><td><label id="lb1"></td></tr>
+</table>
+    <table id="btns">
+<td><div class="ciclebtn" onclick="golisten(21)" style="background:#43BC76;">육</div></td>
+<td><div class="ciclebtn" onclick="golisten(23)" style="background:#0072ff;">해</div></td>
+<td><div class="ciclebtn" onclick="golisten(26)" style="background:gray;">공</div></td>
+  </table></div><!-- Armycheckboard end line-->
+</div><!-- playboard end line-->
+</body>
+  
+  
+    <script >
+    window.onload=function(){
+}
+
+/////////////////////armycheck start
+var md=["",31,28,31,30,31,30,31,31,30,31,30,31];
+function today(){
+   var date = new Date();
+        var year  = date.getFullYear();
+        var month = date.getMonth() + 1; // 0부터 시작하므로 1더함 더함
+        var day   = date.getDate();
+        if (("" + month).length == 1) { month = "0" + month; }
+        if (("" + day).length   == 1) { day   = "0" + day;   }
+return year+""+month+""+day;
+}
+function zerop(int){
+  if(int<10){int="0"+int;}
+  return int+"";
+}
+function dayday(x,y,m){//날짜사이의 격차 m=몇개월 뒤
+  var xyy=x.slice(0,2);
+	var xmm=x.slice(2,4);
+	var xdd=x.slice(4,6);
+  var yyy=y.slice(0,2);
+	var ymm=y.slice(2,4);
+	var ydd=y.slice(4,6);
+  if(m!=0){// 몇개월 뒤를 보여준다
+      xmm=parseInt(xmm)+m;
+      xdd=parseInt(xdd)-1;if(xdd==0){xdd=1}
+      while(xmm>12){xmm-=12;xyy=parseInt(xyy)+1;}
+      //if(xdd<1){xmm--;}
+      return zerop(xyy)+zerop(xmm)+zerop(xdd);
+     }
+  var day=0;
+  xyy=parseInt(xyy);
+  xmm=parseInt(xmm);
+  xdd=parseInt(xdd);
+  yyy=parseInt(yyy);
+  ydd=parseInt(ydd);
+  ymm=parseInt(ymm);
+  while(x!=y){if(day>3000){break;}//방지 3000일제한
+    ydd++;day++;
+    if(yyy%4==0){md[2]=29;}
+    else{md[2]=28;}    
+    if(ydd>md[ymm]){ymm++;ydd=1;}
+    if(ymm>12){ymm=1;yyy++;}
+    y=zerop(yyy)+zerop(ymm)+zerop(ydd);
+  }
+  return day;
+}
+function golisten(num){
+  if(num==0){num=21;}
+  var ipday=document.getElementById("scan").value+"151207";//입력한날짜
+	document.getElementById("percent").innerHTML=go(ipday,num);
+}
+function go(ipday,service){//service= 몇개월 하는지
+	ipday=ipday.slice(0,6);
+  //if(parseInt(ipday.slice(0,2))<14){ipday="140000"}
+	document.getElementById("scan").value=ipday;
+  
+  
+  var todaystr=today(); todaystr=todaystr.slice(2)
+  var endstr=dayday(ipday,"",service);
+  var totalday=dayday(endstr,ipday,0);
+  var bokmu=dayday(todaystr,ipday,0);//복무일수
+	
+  //document.getElementById("endlb").innerHTML=endstr;
+  //document.getElementById("totallb").innerHTML=totalday;
+  //document.getElementById("lb0").innerHTML=totalday-bokmu;
+  //document.getElementById("lb1").innerHTML=bokmu;
+  
+  var infor="전     역: "+endstr+"\n총복무일 : "+totalday+"일\n복무일수 : "+bokmu+"일\n남은일수 : "+(totalday-bokmu)+"일";
+  document.getElementById("percent").title=infor;
+  var percent=(bokmu/totalday)*100+"";
+  //document.getElementById("lb2").innerHTML=percent.slice(0,5)+"%";
+  return percent.slice(0,5);
+}
+/////////////////////armycheck end
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 

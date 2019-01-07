@@ -1,0 +1,21 @@
+<html>
+<head>
+<script>
+var count=0;
+var check=true;
+setInterval(function(){ check=true; }, 1000);
+function up(){
+    if(check){
+        check=false;
+        document.getElementById('count').innerHTML=++count+" count";
+    }
+}
+window.onkeydown = function() {
+    up();
+}
+</script>
+</head>
+<body>
+<h2 id="count">0</h2>
+</body>
+</html>

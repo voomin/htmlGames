@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - amho 3</title>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  
+<textarea id="scans" rows="5" cols="30" name="contents"></textarea>
+<br><input type="button" onclick="clickam()" value="↓↓암호화" style="width:115px;">
+<input type="button" onclick="clickrs()" value="↑↑해독" style="width:115px;">
+<br>
+<textarea id="scans2" rows="5" cols="30" name="contents"></textarea>
+<label id="status">--</label> <br><br>key<br>
+<input  id="key" value="" type="password" style="width:233px;">
+<script>
+   function clickam(){  						document.getElementById("scans2").value=am(keyjob(document.getElementById("key").value),document.getElementById("scans").value);
+	                    
+  }
+  function clickrs(){  document.getElementById("scans").value=resolve(keyjob(document.getElementById("key").value),document.getElementById("scans2").value);
+  }
+  var mix_word="O";
+  var end_alpabet="I";
+ function keyjob(key_value){
+  var ik=1;
+  var dk=key_value+"";
+   for(i=0;i<dk.length;i++){
+     if(dk.charCodeAt(i)>=48&&dk.charCodeAt(i)<=57){ik*=dk.charCodeAt(i)}
+     else{ik*=dk.charCodeAt(i)}
+   }
+   return ik;
+}
+  function am(k,str){
+    var show="";
+    for(i=0;i<str.length;i++){
+    	show+=mix(i)+end_alpabet; 
+    }
+    return show;
+    function mix(num){
+      var numb=R(str.charCodeAt(num)*k);
+      return numb+mix_word+(str.charCodeAt(num)*k-numb);//((str.charCodeAt(num)*k)-numb)+js+(numb);
+    }
+  }
+  function resolve(k,str){// 주석 지우고 다시하기 2016.12.20:32
+    var show="";
+   while(1){
+          var m_num_no=str.indexOf(mix_word);//mix num no
+     			var e_num_no=str.indexOf(end_alpabet);//end num no
+     				if(m_num_no==-1&&e_num_no==-1){
+              if(show==""){show="false!!";}
+              break;}
+          var basket=parseInt(str.slice(0,m_num_no))
+          						+parseInt(str.slice(m_num_no+1,e_num_no));
+     			show+=String.fromCharCode(basket/k);
+          str=str.slice(e_num_no+1);
+          }
+  return show;
+  }
+  function R(maxrn){
+  return Math.round(Math.random()*maxrn);
+}
+  function showmethekey(check_amho,check_str){
+    var keynum=0;
+    var strarr="";
+    while(1){
+      var restr=resolve(keyjob(keynum),check_amho);
+      strarr+=keynum+" : "+restr+"\n";
+      if(restr==check_str||keynum==222222){break;}
+      keynum++;
+    }
+    return keynum+":키 값 \n"+strarr;
+  }
+</script>
+  
+  
+  
+  
+  
+
+</body>
+</html>
+ 

@@ -1,0 +1,121 @@
+<html>
+    <head>
+        <style>
+            td{
+                width:10px;
+                height:10px;
+                border:1px solid #333;
+            }
+        
+        </style>
+    </head>
+    <body>
+        <h2 id='here'></h2>
+        <table>
+        <script>
+            var count=30;//화면에 보여질 가로세로 크기
+            for(i=0;i<count;i++){
+                document.write("<tr>");
+                for(k=0;k<count;k++){
+                    document.write("<td id='b["+i+"]["+k+"]'></td>");
+                }
+                document.write("</tr>");
+            }
+        </script>
+        </table>
+        <h2 id='size'></h2>
+    </body>
+</html>
+<script>
+    var color=["white","red","orange","yellow","green","blue","navy","purple"];
+    var R=(min,max)=>parseInt(Math.random()*(max-min))+min;//min<=()<max
+    var map=[];
+    var MyPosition=[50,50];
+    MapSetting();
+    show(MyPosition);
+    function MapSetting(){
+        var SetCount=100;
+        for(i=0;i<SetCount;i++){
+            map.push(new Array());
+            for(k=0;k<SetCount;k++){
+                map[i].push(R(0,color.length));
+            }
+        }
+        document.getElementById("size").innerHTML=map[0].length+" X "+map.length;
+    }
+    function increaseWidthLeft(){
+        for(i=0;i<map.length;i++){
+            map[i].unshift(R(0,color.length));
+        }
+    }
+    function increaseWidthRight(){
+        for(i=0;i<map.length;i++){
+            map[i].push(R(0,color.length));
+        }
+    }
+    function increaseHeightUp(){
+        map.unshift(new Array());
+        for(i=0;i<map[1].length;i++){
+            map[0].push(R(0,color.length));
+        }
+    }
+    function increaseHeightDown(){
+        map.push(new Array());
+        for(i=0;i<map[0].length;i++){
+            map[map.length-1].push(R(0,color.length));
+        }
+    }
+    function sendMap(position,width){//좌표랑 크기
+        var arr=[];
+        for(i=0;i<width;i++){
+            arr.push(map[position[0]+i].slice(position[1],position[1]+width));
+        }
+        return arr;
+    }
+    function show(position){
+        var arr=sendMap(position,count);
+        for(i=0;i<arr.length;i++){
+            for(k=0;k<arr[0].length;k++){
+                document.getElementById("b["+i+"]["+k+"]").style.backgroundColor=color[arr[i][k]];
+            }
+        }
+        document.getElementById("here").innerHTML="현재 위치 x="+MyPosition[1]+",y="+MyPosition[0];
+    }
+    document.onkeydown=function(event){
+        switch(event.keyCode){
+            case 37://left
+            MyPosition[1]--;
+            if(MyPosition[1]<0){
+                MyPosition[1]=0;
+                increaseWidthLeft();
+                document.getElementById("size").innerHTML=map[0].length+" X "+map.length;
+            }
+            break;
+            case 39://right
+            MyPosition[1]++;
+            if(MyPosition[1]+count>=map[0].length){
+                //alert(MyPosition)
+                increaseWidthRight();
+                document.getElementById("size").innerHTML=map[0].length+" X "+map.length;
+            }
+            break;
+            case 38://top
+            MyPosition[0]--;
+            if(MyPosition[0]<0){
+                increaseHeightUp();
+                MyPosition[0]=0;
+                document.getElementById("size").innerHTML=map[0].length+" X "+map.length;
+            }
+            break;
+            case 40://bottom
+            MyPosition[0]++;
+            if(MyPosition[0]+count>=map.length){
+                increaseHeightDown();
+                document.getElementById("size").innerHTML=map[0].length+" X "+map.length;
+            }
+            break;
+        }
+        show(MyPosition);
+    }
+
+</script>

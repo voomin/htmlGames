@@ -1,0 +1,187 @@
+<html>
+<head>
+<title>준석상 야구게임</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<h3 class="answer"></h3>
+<script>
+    for(i=0;i<10;i++){
+        document.write("<button class='btn'>"+i+"</button>");
+    }
+</script>
+<table>
+<tr>
+    <td><button class="enter">입력</button></td>
+</tr>
+<tr>
+    <td><h2 class='view'></h2></td>
+    <td><button class='cancle'>x</button></td>
+</tr>
+</table>
+<div class="log">
+</div>
+</body>
+</html>
+<script>
+    var playCount=0;
+    var Thread;
+    var R=(min,max)=>parseInt(Math.random()*(max-min))+min;
+    var Number=[0,1,2,3,4,5,6,7,8,9];
+    var arr=[];
+    var answer=null;
+    $(document).ready(function(){
+        arrSetting();
+        $("table button").hide();
+        $(".cancle").click(function(){
+            del();
+        });
+        $(".btn").click(function(){
+           var i=$(this).index()-2;
+           var str=$(".view").html()+i;
+           if(4>=str.length){
+            $(".view").html(str);
+            $(this).hide();
+           }
+            if(str.length>0)
+                $(".cancle").show();
+            if(str.length>=4)
+                $(".enter").show();
+        });
+        $(".enter").click(function(){
+            var str=$(".view").html();
+            if(answer==null){
+                answer=str;
+                $(".answer").html(answer);
+                //Thread=setInterval(function(){ play() }, 1000);
+                play();
+            }else{
+                
+            }
+            del();
+        });
+    });
+    function del(){
+        $(".view").html("");
+        $("table button").hide();
+        $(".btn").show();
+    }
+    function arrSetting(){        
+        var N=[];
+        N[0]=Number.slice();
+        init(1);
+        init(2);
+        init(3);
+        for(i=0;i<10*9*8*7;i++){
+            var a=[];
+            a[0]=N[0][0];
+            a[1]=N[1][0];
+            a[2]=N[2][0];
+            a[3]=N[3][0];
+            arr.push(a);
+            N[3].splice(0,1);
+            if(N[3].length==0){
+                N[2].splice(0,1);
+                init(3);
+            }
+            if(N[2].length==0){
+                N[1].splice(0,1);
+                init(2);
+                init(3);
+            }
+            if(N[1].length==0){
+                N[0].splice(0,1);
+                init(1);
+                init(2);
+                init(3);
+            }
+        }
+        function init(n){
+            N[n]=Number.slice();
+            for(ins=0;ins<n;ins++)
+                N[n].splice(N[n].indexOf(N[ins][0]),1);
+        }
+    }
+    function play(str=""){
+            playCount++;
+            var index=R(0,arr.length);
+            //console.log(arr.length+"가지의 경우의수.");
+            var tempArr=arr[index];
+            arr.splice(index,1);
+            if(str=="")
+            str=tempArr.join("");
+            var SB=baseball(str+"");//strike ball
+            $(".log").append(str+" = "+SB+"<br>");
+    }
+    function clear(){
+        clearInterval(Thread);
+        $(".log").append("<br>Count :"+playCount+" Clear!!<br><br>");
+    }
+    function baseball(str){
+        var s=0;
+        var b=0;
+        var insertStr=str;
+        for(i=0;i<str.length;i++){
+            if(str[i]==answer[i]){
+                s++;
+                str=str.replace(str[i],"#");
+            }
+        }
+        for(i=0;i<str.length;i++){
+            if(answer.indexOf(str[i])>=0)
+                b++;
+        }
+        str=(0<s)?s+"S":"";
+        str+=(0<b)?b+"B":"";
+        if(s==4){
+            clear();
+        }
+        /*
+        if(0<s&&b==0){//strike만 나왔을때,
+            switch(s){
+                case 3:
+                    var arr2=[];
+                    for(j=0;j<insertStr.length;j++){
+                        var searchStr="";
+                        searchStr+=(j!=0)?insertStr.charAt(0):"";
+                        searchStr+=(j!=1)?insertStr.charAt(1):"";
+                        searchStr+=(j!=2)?insertStr.charAt(2):"";
+                        searchStr+=(j!=3)?insertStr.charAt(3):"";
+                        for(i=0;i<arr.length;i++){
+                            var arrStr="";
+                            arrStr+=(j!=0)?arr[i][0]:"";
+                            arrStr+=(j!=1)?arr[i][1]:"";
+                            arrStr+=(j!=2)?arr[i][2]:"";
+                            arrStr+=(j!=3)?arr[i][3]:"";
+                            if(arrStr==searchStr){
+                                arr2.push(arr[i].slice());
+                            }
+                        }
+                    }
+                    arr=arr2.slice();
+                    break;
+            }
+        }*/
+        if(0==s&&b>0){//ball만 나왔을때,
+            for(i=0;i<insertStr.length;i++){
+                delElement(i,insertStr[i]);
+            }
+        }
+        if(0==s&&b==0){//strike랑 ball이 안떳을때
+            str="out";
+            for(i=0;i<insertStr.length;i++)
+                for(k=0;k<4;k++)
+                    delElement(i,insertStr[k]);
+        }
+        console.log(insertStr+"일때,");
+        return str;
+    }
+    function delElement(index,num){//index부분에 num이 오는건 없애야한다.
+        for(j=0;j<arr.length;j++){
+            if(num==arr[j][index]){
+                arr.splice(j,1);
+                j--;
+            }
+        }
+    }
+</script>

@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - tomandcat 저장1</title>
+  
+  
+  
+  
+      <style>
+       body{
+   font-size:7px;
+}
+#map{
+  background-color:#ccc;
+}
+.block{
+  background-color:#777;
+  position:absolute;
+}
+.users{
+  background-color:green;
+  position:absolute;
+}
+.mouses{
+  background-color:Navy;
+  position:absolute;
+}
+.sign{
+  background-color:yellow;
+  position:absolute;
+  border:1px solid black;
+}
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  <div id="map"></div>
+  
+  
+    <script >
+    
+    var mapsize=600;
+var blocksize=15;
+var blockcount=187;
+var mousecount=8;
+var mousespeed=400;
+var blockspx=[];
+var userspx=[];
+var mousespx=[];
+var pparr=[];
+var pbasicnum=1;
+window.onload=function(){
+  mapsetting();
+  blockcreate(blockcount);
+  mousecreate(mousecount);
+  usercreate(1);
+  
+  mainthread();
+}//window onload
+document.onkeypress=function(event){
+  var usercode=0;//몇번유저가 움직일지 나는 0번유저만 관리
+  var scan=window.event.keyCode;
+  console.log(scan);
+  switch(scan){
+    case 52:movingadmin(userspx[usercode],-1,0);break;
+    case 54:movingadmin(userspx[usercode],1,0);break;
+    case 53:movingadmin(userspx[usercode],0,1);break;
+    case 56:movingadmin(userspx[usercode],0,-1);break;
+    case 97:movingadmin(userspx[usercode],-1,0);break;
+    case 100:movingadmin(userspx[usercode],1,0);break;
+    case 115:movingadmin(userspx[usercode],0,1);break;
+    case 119:movingadmin(userspx[usercode],0,-1);break;
+      
+         }
+  moveshow("user"+usercode,userspx[usercode]);
+}
+function mainthread(){
+  var id=setInterval(frame,mousespeed);
+  function frame(){
+    mousescontrol();
+  }
+}//mainthread
+function mousescontrol(){
+  for(i=0;i<mousecount;i++){
+    var pointer=Aimouse(i);
+    var x=0,y=0;
+    switch(pointer){
+      case "l":x=-1,y=0;break;//left
+      case "r":x=1,y=0;break;//right
+      case "d":x=0,y=1;break;//down
+      case "u":x=0,y=-1;break;//up
+      case "s":x=0,y=0;break;//stop
+                  }//swtich
+    movingadmin(mousespx[i],x,y);
+    moveshow("mouse"+i,mousespx[i]);
+  }
+}
+function Aimouse(number){
+  var destination=userspx[0];//목적지= destination
+  var pplus=710;
+  pointerinit();
+  meetcheck();
+  return result();
+  
+  function result(){
+    var dn=0;//denominator : 분모
+      for(di=0;di<pparr[number].length;di++){
+        dn+=pparr[number][di];
+      }
+    if(pparr[number][0]==1&&pparr[number][1]==1){if(pparr[number][2]==1&&pparr[number][3]==1)return "s"}
+    var random=R(1,dn);
+    if(random<=pparr[number][0]){return "l"}
+    if(random<=pparr[number][0]+pparr[number][1]){return "r"}
+    if(random<=pparr[number][0]+pparr[number][1]+pparr[number][2]){return "d"}
+    if(random<=pparr[number][0]+pparr[number][1]+pparr[number][2]+pparr[number][3]){return "u"}
+  }//function result end line---------------------
+  function meetcheck(){
+   if(!meetfx(userspx[0],mousespx[number])){//user 와 안만나면
+    basic(destination);
+  }else{//user 와 만났을 경우 stop하기위해 
+    for(di=0;di<pparr[number].length;di++){
+        pparr[number][di]=1;
+      }//for
+  }//else
+  }// function meetcheck end line--------------------
+  function pointerinit(){for(pi=0;pi<pparr[number].length;pi++){pparr[number][pi]=1;}}
+  
+  function basic(dt){
+    if(dt[0]<mousespx[number][0]){pparr[number][0]=pplus;}//l
+    if(dt[0]>mousespx[number][0]){pparr[number][1]=pplus;}//r
+    if(dt[1]>mousespx[number][1]){pparr[number][2]=pplus;}//d
+    if(dt[1]<mousespx[number][1]){pparr[number][3]=pplus;}//u
+   
+    if(dt[0]==mousespx[number][0]){pparr[number][0]=1;pparr[number][1]=1;}//l,r
+    if(dt[1]==mousespx[number][1]){pparr[number][2]=1;pparr[number][3]=1;}//u,d
+    
+    if(blockYorN2(mousespx[number][0]-1,mousespx[number][1])){pparr[number][0]=0;}//한칸옆에 블럭이 있을경우
+    if(blockYorN2(mousespx[number][0]+1,mousespx[number][1])){pparr[number][1]=0;}
+    if(blockYorN2(mousespx[number][0],mousespx[number][1]+1)){pparr[number][2]=0;}
+    if(blockYorN2(mousespx[number][0],mousespx[number][1]-1)){pparr[number][3]=0;}
+    
+   
+  }
+  function aroundb(long){
+  }
+}//function Ai mouse end line-------------------------
+function mapsetting(){
+  document.getElementById("map").style.width=mapsize+"px";
+  document.getElementById("map").style.height=mapsize+"px";
+  document.getElementById("map").style.border=blocksize+"px solid #777";
+}//mapsetting
+function blockcreate(count){
+  for(i=0;i<count;i++){
+     create();
+    }//for
+  function create(){
+  div=document.createElement("div");
+   div.className='block';
+  div.style.width=blocksize+"px";
+    div.title="block"+blockspx.length;
+  div.style.height=blocksize+"px";
+  var arr=[R(0,(mapsize/blocksize)-1),R(0,(mapsize/blocksize)-1)];
+   while(blockYorN(arr)){//user 초기위치에 블럭이있을경우 다시
+        arr=[R(0,(mapsize/blocksize)-1),R(0,(mapsize/blocksize)-1)];
+   }//while
+  blockspx[blockspx.length]=arr[0]+"-"+arr[1];
+   div.style.marginLeft=arr[0]*blocksize+"px";
+   div.style.marginTop=arr[1]*blocksize+"px";
+  document.getElementById("map").appendChild(div);
+  }
+}//blockcreate function
+function mousecreate(count){
+  for(i=0;i<count;i++){
+     create();
+    }//for
+  function create(){
+  div=document.createElement("div");
+   div.className='mouses';
+   div.id="mouse"+mousespx.length;
+    var arr2=[pbasicnum,pbasicnum,pbasicnum,pbasicnum];
+    pparr[mousespx.length]=arr2;
+  div.title="M."+mousespx.length;
+    //div.innerHTML="M."+mousespx.length;
+  //div.style.backgroundColor="#"+R(0,9)+R(0,9)+R(0,9);
+  div.style.width=blocksize+"px";
+  div.style.height=blocksize+"px";
+  var arr=[R(0,(mapsize/blocksize)-1),R(0,(mapsize/blocksize)-1)];
+  while(blockYorN(arr)){//user 초기위치에 블럭이있을경우 다시
+        arr=[R(0,(mapsize/blocksize)-1),R(0,(mapsize/blocksize)-1)];
+   }//while
+  mousespx[mousespx.length]=arr;
+   div.style.marginLeft= mousespx[mousespx.length-1][0]*blocksize+"px";
+   div.style.marginTop= mousespx[mousespx.length-1][1]*blocksize+"px";
+  document.getElementById("map").appendChild(div);
+  }
+}//mousecreate function
+function usercreate(count){
+  for(i=0;i<count;i++){
+     create();
+    }//for
+  function create(){
+  div=document.createElement("div");
+   div.className='users';
+   div.id="user"+userspx.length;
+  div.style.width=blocksize+"px";
+  div.style.height=blocksize+"px";
+  var arr=[R(0,(mapsize/blocksize)-1),R(0,(mapsize/blocksize)-1)];
+  while(blockYorN(arr)){//user 초기위치에 블럭이있을경우 다시
+        arr=[R(0,(mapsize/blocksize)-1),R(0,(mapsize/blocksize)-1)];
+   }//while
+  userspx[userspx.length]=arr;
+   div.style.marginLeft=userspx[userspx.length-1][0]*blocksize+"px";
+   div.style.marginTop=userspx[userspx.length-1][1]*blocksize+"px";
+  document.getElementById("map").appendChild(div);
+  }
+}//usercreate function
+function moveshow(who,arr){//좌표가 저장되있는것을 화면상에 보여준다.
+  document.getElementById(who).style.marginLeft=arr[0]*blocksize+"px";
+  document.getElementById(who).style.marginTop=arr[1]*blocksize+"px";
+}
+function movingadmin(who,x,y){//움직임 관리자 벽이나 맵의 크기에 제한해준다.
+  who[0]+=x;who[1]+=y;
+  if(blockYorN(who)){who[0]-=x;who[1]-=y;}//가상으로 가본다 그러나 벽이있어서 후진한다.
+  if(who[0]<0){who[0]=0;}if(who[1]<0){who[1]=0;}//map
+  if(who[0]>(mapsize/blocksize)-1){who[0]=(mapsize/blocksize)-1;}//map
+  if(who[1]>(mapsize/blocksize)-1){who[1]=(mapsize/blocksize)-1;}//map
+}
+function meetfx(a,b){//만났는지 확인해주는 함수
+  if(a[0]==b[0]&&a[1]==b[1]){return true;}
+  else {return false;}
+}
+function blockYorN2(who0,who1){//true 가 막고있다
+  if(0<=blockspx.indexOf(who0+"-"+who1)){return true;}
+  else{return false;}
+}
+function blockYorN(who){//true 가 막고있다
+  if(0<=blockspx.indexOf(who[0]+"-"+who[1])){return true;}
+  else{return false;}
+}
+function R(minrnum,maxrnum){
+  return Math.round(Math.random()*(maxrnum-minrnum))+minrnum;
+}
+function mapsign(signx,signy){//     $('.sign').remove()  =  삭제 명령어
+  div=document.createElement("div");
+   div.className='sign';
+  div.style.width=blocksize+"px";
+  div.style.height=blocksize+"px";
+   div.style.marginLeft=signx*blocksize+"px";
+   div.style.marginTop=signy*blocksize+"px";
+  document.getElementById("map").appendChild(div);
+}
+function howlong(whoa,whob){//얼마나 가야되는지 몇칸을 움직여야하는지
+  return Math.abs(whoa[0]-whob[0])+Math.abs(whoa[1]-whob[1]);
+}
+function between(whoa,whob){//~사이의 거리
+  return Math.sqrt(Math.pow(whoa[0]-whob[0],2)+Math.pow(whoa[1]-whob[1],2));
+}
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 

@@ -1,0 +1,277 @@
+﻿<style>
+
+body{
+	margin:0 auto; 
+	padding:0 auto;
+	display: table;
+	text-align:center;
+}
+span{
+	font-weight: bold;
+}
+#map div{
+	position:absolute;
+}
+.user{
+	background-color:green;
+}
+#pointer{
+	background-color:#ccc;
+	z-index:-1;
+}
+
+.ddong{
+	background-image:url(face1.png);
+	background-size: contain;
+	background-color:brown;
+}
+</style>
+<html>
+    <body>
+	<div id="map"></div>
+	<span>Top.</span><span id='top'>0</span>
+	<p id='score'>0</p>
+    </body>
+</html>
+<script>
+	var D=[];
+	var set={//초기값
+		block:15,
+		spd:3
+	}
+	var map={
+		size:40,
+		rate:[9,16],//비율 9:16
+		xy:[],
+		set:function(){
+			map.xy=[parseInt(map.size*map.rate[0]),parseInt(map.size*map.rate[1])];
+			document.getElementById("map").style.width=map.xy[0]+"px";
+  			document.getElementById("map").style.height=map.xy[1]+"px";
+  			document.getElementById("map").style.border=10+"px solid #777";//테두리
+		}		
+	}
+	function user(){
+		this.point=[0,0,0,0];//왼오위아
+		this.px=[200,600];
+		this.spd=set.spd;
+		this.a=0.7;//가속도
+		this.name="";
+		this.create=function (name){
+			this.name=name;
+			div=document.createElement("div");
+   			div.className='user';
+			div.id=this.name;
+			this.no=D.length-1;
+			div.style.width=set.block+"px";
+  			div.style.height=set.block+"px";
+  			document.getElementById("map").appendChild(div);
+			document.getElementById(this.name).style.marginLeft=this.px[0]+"px";
+			document.getElementById(this.name).style.marginTop=this.px[1]+"px";
+		}
+		this.position=function (pxx,pyy){
+			this.px=[pxx,pyy];
+			document.getElementById(this.name).style.marginLeft=this.px[0]+"px";
+			document.getElementById(this.name).style.marginTop=this.px[1]+"px";
+		}
+		this.move=function(){
+			if(this.point[0]){
+				this.px[0]-=this.spd;
+			}
+			if(this.point[1]){
+				this.px[0]+=this.spd;
+			}
+			if(this.point[2]){
+				this.px[1]+=this.spd;
+			}
+			if(this.point[3]){
+				this.px[1]-=this.spd;
+			}
+
+			if(this.px[0]<0){
+				this.px[0]=0;
+			}
+			if(this.px[1]<0){
+				this.px[1]=0;
+			}
+			if(this.px[0]>map.xy[0]-set.block){
+				this.px[0]=map.xy[0]-set.block;
+			}
+			if(this.px[1]>map.xy[1]-set.block){
+				this.px[1]=map.xy[1]-set.block;
+			}
+			document.getElementById(this.name).style.marginLeft=this.px[0]+"px";
+			document.getElementById(this.name).style.marginTop=this.px[1]+"px";
+		}
+	}
+	function ddong(){
+		this.px=[0,0];
+		this.no=-1;
+		this.spd=0;
+		this.a=0.07;//가속도
+		this.create=function (){
+			div=document.createElement("div");
+   			div.className='ddong';
+			div.id="D"+(D.length-1);
+			this.no=D.length-1;
+			div.style.width=set.block+"px";
+  			div.style.height=set.block+"px";
+  			document.getElementById("map").appendChild(div);
+		}
+		this.Rposition=function (){
+			this.spd=0;
+			this.px=[R(0,(map.xy[0]-set.block)),0];
+			document.getElementById("D"+this.no).style.marginLeft=this.px[0]+"px";
+			document.getElementById("D"+this.no).style.marginTop=this.px[1]+"px";
+		}
+		this.drop=function (){
+			this.spd+=this.a;
+			this.px[1]+=this.spd;
+			document.getElementById("D"+this.no).style.marginTop=this.px[1]+"px";
+		}
+	}
+	function R(minrnum,maxrnum){
+  		return Math.round(Math.random()*(maxrnum-minrnum))+minrnum;
+	}
+	function addD(){
+		D.push(new ddong());
+		D[(D.length-1)].create();
+		D[(D.length-1)].Rposition();
+	}
+	function limit(){
+		document.getElementById("map").innerHTML='';
+		
+		if(parseInt(document.getElementById("score").innerHTML)>parseInt(document.getElementById("top").innerHTML)){
+			document.getElementById("top").innerHTML=document.getElementById("score").innerHTML;
+		}
+		document.getElementById("score").innerHTML='0';	
+		map.set();
+		me_pointer.create("pointer");
+		me.create("me");
+		D=[];
+		addD();
+		this.play=function(){
+			for(koko=0;koko<D.length;koko++){
+				D[koko].drop();
+				if(D[koko].px[1]>map.xy[1]-set.block){//끝에 도달하면 초기화
+					D[koko].Rposition();
+				}
+			}
+
+		}
+	}
+	function touch(){
+		me.move();
+		document.getElementById("score").innerHTML=Number(document.getElementById("score").innerHTML)+1;
+		for(di in D){
+			if(me.px[0]+set.block>D[di].px[0]&&D[di].px[0]+set.block>me.px[0]){
+				if(me.px[1]+set.block>D[di].px[1]&&D[di].px[1]+set.block>me.px[1]){
+					limit();
+					break;
+				}
+			}
+		}
+	}
+	function control(){
+		this.brain=function(){
+			think();
+			move();
+		}
+		function move(){
+			if(me_pointer.px[0]<me.px[0]){
+				l();
+			}
+			else if(me_pointer.px[0]>me.px[0]){
+				r();
+			}else 
+				s();
+		}
+		function think(){
+			//var minmax=[map.xy[0],map.xy[1]];
+			var m_center=(me.px[0]+set.block)/2;
+			for(dk in D){
+				var d_center=(D[dk].px[0]+set.block)/2;
+				if(d_center<m_center){
+					me_pointer.position(parseInt(d_center+(set.block/2)),me.px[1]);
+				}
+				else if(d_center>m_center){
+					me_pointer.position(parseInt(d_center-(set.block/2)),me.px[1]);
+				}
+			}
+		}
+		function l(){
+			me.point[0]=1;
+			me.point[1]=0;
+			spdup();
+		}
+		function r(){
+			me.point[0]=0;
+			me.point[1]=1;
+			spdup();
+		};
+		function t(){
+			me.point[2]=0;
+			me.point[3]=1;
+			spdup();
+		}
+		function b(){
+			me.point[2]=1;
+			me.point[3]=0;
+			spdup();
+		}
+		function s(){
+			me.point[0]=0;
+			me.point[1]=0;
+			me.point[2]=0;
+			me.point[3]=0;
+			me.spd=set.spd;
+		}
+		function spdup(){
+			//me.spd+=me.a;
+			//console.log("가속");
+		}
+	}
+	var me=new user();
+	var me_pointer=new user();
+	var start=new limit();
+	var ai=new control();
+	setInterval(addD,1800);
+	setInterval(start.play,10);
+	setInterval(touch,10);
+	setInterval(ai.brain,100);
+	
+	
+	
+</script>
+
+<script>
+/*
+
+		this.left=function(){
+			me.point[0]=1;
+			me.point[1]=0;
+			spdup();
+		};
+		this.right=function(){
+			me.point[0]=0;
+			me.point[1]=1;
+			spdup();
+		};
+		this.top=function(){
+			me.point[2]=0;
+			me.point[3]=1;
+			spdup();
+		}
+		this.bottom=function(){
+			me.point[2]=1;
+			me.point[3]=0;
+			spdup();
+		}
+		this.stop=function(){
+			me.point[0]=0;
+			me.point[1]=0;
+			me.point[2]=0;
+			me.point[3]=0;
+			me.spd=set.spd;
+		}
+*/
+</script>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - game 0 ( nopi )</title>
+  
+  
+  
+  
+      <style>
+      html,body{
+  margin : 0 auto;
+  padding: 0 auto;
+}
+.hp_max_bar{
+  border:2px solid #333;
+  width:100px;
+}
+.hp_now_bar{
+  margin : 0 ;
+  padding: 0 ;
+  width:100px;
+  height:15px;
+}
+#m_bar{
+  background-color:green;
+}
+#b_bar{
+  background-color:brown;
+}
+#menu{
+  
+  padding:0 auto;
+  margin:0 auto;
+  width:100%;
+}
+#play_btn{
+  border:5px solid #777;
+  background-color:white;
+  text-align:center;
+  cursor: pointer;/* 마우스 커서 */
+}
+#escape_btn{
+  padding:0 auto;
+  margin:0 auto;
+  width:98%;
+  border:1px solid #777;
+  text-align:center;
+  cursor: pointer;/* 마우스 커서 */
+}
+#stage{
+  margin : 0 auto;
+  padding: 0 auto;
+  display:table;
+  background-color:#cccccc;
+  border:10px solid #777;
+}
+input,button {
+  
+}
+.my_stat{
+  text-align:center;
+  margin : 0 auto;
+  padding: 0 auto;
+  display:table;
+  background-color:#cccccc;
+}
+.bot_stat{
+  margin : 0 auto;
+  padding: 0 auto;
+  display:table;
+  background-color:#cccccc;
+}
+.stat_name{
+  background-color:#cccccc;
+}
+td{
+  text-align:center;
+}
+#money{
+  width:98%;
+  text-align:right;
+  
+}
+#dice{
+  text-align:center;
+  cursor: pointer;/* 마우스 커서 */
+}
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  <table><tr>
+<td id="name_lb" onclick="name_insert()" >name : </td>
+<td><input id="name_i" style="display:block;"></input></td>
+<td><button id="insert_btn" style="display:block;" onclick="name_insert()">insert</button></td>
+</tr>
+<p id="dice" style="display:block;" title="주사위" onclick="m_restat()">▩</p>
+</table>
+<table><td>nopi : </td><td id="nopi" title="0">0</td></table>
+<div id="stage">
+  <input id="money" value="0 ￦" readonly></input>
+  <p id="escape_btn" title="(me) spd > spd (mob) = change!!" style="display:block;" onclick="escape_btn_click()">mob change try</p>
+<table >
+  <tr><td id="name_td">me</td><td id="play_btn" title="start" onclick="play_click()">▶</td><td>mob</td></tr>
+  <tr class="tr_0"><td class="hp_max_bar"><div class="hp_now_bar" id="m_bar"></div></td><td>vs</td><td class="hp_max_bar"><p class="hp_now_bar" id="b_bar"></p></td></tr>
+    <script>
+      var s_names=["hp","atk","atk - spd","def","spd","hp↑"];
+      for(i=0;i<s_names.length;i++){
+        document.write("<tr><td class='my_stat' id='m_st_"+i+"'>0</td><td class='stat_name'>"+s_names[i]+"</td><td class='bot_stat' id='b_st_"+i+"'>0</td></tr>");
+      }
+      </script>
+    </table>
+</div>
+  
+  
+    <script >
+    m_restat();
+b_reset();
+function name_insert(){
+  if(value("name_i")!=""){
+    innerHTML("name_lb",value("name_i"));
+    limit();
+  }
+  function limit(){
+    innerHTML("name_td",value("name_i"));
+    hide("insert_btn");
+    hide("name_i");
+    hide("dice");
+  }
+}
+
+var atk_int=[0,0];
+var thread=[
+  setInterval(attack_fx,1),
+  setInterval(heal_fx,5000)
+];
+function heal_fx(){
+  //if(document.getElementById("play_btn").innerHTML=="||"){//play gogo
+    heal('m');
+    heal('b');
+  //}
+  function heal(who){
+    if(return_title(who+'_bar')-stat(who,5)>stat(who,0)){stat_ch(who,0,stat(who,5));}
+    else{stat_in(who,0,return_title(who+'_bar'));}
+  }
+}
+function attack_fx(){  
+    if(atk_int[0]>=parseInt(1000/stat('m',2))&&document.getElementById("play_btn").innerHTML=="||"){//play gogo
+      attack(['b','m']);atk_int[0]=0;
+      kill();
+     }
+  if(atk_int[1]>=parseInt(1000/stat('b',2))&&document.getElementById("play_btn").innerHTML=="||"){//play gogo
+      attack(['m','b']);atk_int[1]=0;
+      die();
+     }
+  atk_int[0]++;
+  atk_int[1]++;
+  function attack(who){
+      stat_ch(who[0],0,-stat(who[1],1));
+  }
+    function kill(){
+      if(stat('b',0)<=0){
+        b_reset();
+        atk_int=[0,0];
+        title('nopi',parseInt(return_title('nopi'))+1)
+        innerHTML('nopi',int_show(return_title('nopi')));
+      }
+    }
+    function die(){
+      stat_ch("m",0,-stat('b',1));
+      if(stat('m',0)<=0){
+        play_click();
+        alert("die")
+      }
+    }
+}//m_attack_fx
+
+
+function play_click(){
+  var doc=document.getElementById("play_btn");
+  if(doc.innerHTML=="▶"){//play gogo
+     doc.innerHTML="||";
+     doc.title="STOP !!";
+     //hide("escape_btn");
+     }
+  else{
+    doc.innerHTML="▶";
+    doc.title="start";
+    //hide("escape_btn");
+  }
+}
+function escape_btn_click(){
+  if(stat('m',4)>=stat('b',4)){b_reset();}
+  else{}
+}
+function return_title(doc){
+  return parseFloat(document.getElementById(doc).title);
+}
+function title(doc,val){
+  document.getElementById(doc).title=val;
+}
+function value(doc){
+  return document.getElementById(doc).value;
+}
+function innertext(doc){//갑 확인
+  return document.getElementById(doc).innerHTML;
+}
+function innerHTML(doc,val){//갑 교체
+  return document.getElementById(doc).innerHTML=val;
+}
+function hide(doc){
+  if(document.getElementById(doc).style.display=='block'){
+    document.getElementById(doc).style.display="none";
+  }
+  else{
+    document.getElementById(doc).style.display="block";
+  }
+}
+function stat(who,no){//값 확인
+  //return innertext(who+"_st_"+no);
+  return parseFloat(document.getElementById(who+"_st_"+no).title);
+}
+function stat_in(who,no,num){//값 적용
+  innerHTML(who+"_st_"+no,int_show(num));
+  title(who+"_st_"+no,num);
+  if(no==0){
+    title(who+"_bar",num);
+    document.getElementById(who+"_bar").style.width=(stat(who,0)/document.getElementById(who+"_bar").title)*100+"px";
+  }
+}
+function stat_ch(who,no,num){//증가값 적용
+  num=parseInt(stat(who,no))+num;
+  innerHTML(who+"_st_"+no,int_show(num));
+  title(who+"_st_"+no,num);
+  if(no==0){
+    document.getElementById(who+"_bar").style.width=(stat(who,0)/document.getElementById(who+"_bar").title)*100+"px";
+  }
+}
+function int_show(number){
+  var cut_num=[1000000,1000];
+  if(number/cut_num[0]>=1){
+    if(number%cut_num[0]<(cut_num[0]/100)){number-=number%cut_num[0];}
+    number/=cut_num[0]; 
+    number+="";
+    number=number.slice(0,4)+"m";
+  }else if(number/cut_num[1]>=1){
+    if(number%cut_num[1]<cut_num[1]/100){number-=number%cut_num[1];}
+    number/=cut_num[1];
+    number+="";
+    number=number.slice(0,4)+"k";
+           }
+  return number;
+}
+function m_restat(){
+  stat_in('m',0,R(150,200));
+  stat_in('m',1,R(15,33));
+  stat_in('m',2,R(200,590)/100);
+  stat_in('m',3,R(10,30));
+  stat_in('m',4,R(7,17));
+  stat_in('m',5,R(11,32));
+}
+function b_reset(){
+  stat_in('b',0,R(15,169));
+  stat_in('b',1,R(15,33));
+  stat_in('b',2,R(200,590)/100);
+  stat_in('b',3,R(10,30));
+  stat_in('b',4,R(7,17));
+  stat_in('b',5,R(11,32));
+}
+function R(minrn,maxrn){
+  return Math.round(Math.random()*(maxrn-minrn))+minrn;
+}
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 

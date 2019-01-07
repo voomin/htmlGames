@@ -1,0 +1,111 @@
+﻿<style>
+    #farm .piece{
+        float:left;
+        border:1px solid #333;
+        cursor:pointer;
+    }
+    #newtria{
+        width:100%;
+        height:10%;
+        cursor:pointer;
+        border:1px solid brown;
+        text-align:center;
+        color:red;
+        font-weight:bold;
+        font-size:30px;
+        background-color:orange;
+    }
+</style>
+<html>
+    <head>
+    <script>
+    var set={
+        x:10,
+        y:10,
+        size:50,
+        grow_step:['','거름','새싹',"감자"],
+        price:1000,
+        monster_time:100,
+        money:0,
+        hp:[100,100,100],//몬스터의 hp초기값 , 최대체력, 현재체력
+        attack:5
+    }
+    var monster;
+    var farr=[];
+    function createDIV(x,y){
+        farr[x][y]=0;
+        document.write("<div class='piece' id='p["+x+"]["+y+"]' onclick='eat("+x+","+y+")'>");
+        document.write("</div>");
+        document.getElementById("p["+i+"]["+j+"]").style.width=set.size-3;
+        document.getElementById("p["+i+"]["+j+"]").style.height=set.size-3;
+    }
+    </script>
+    </head>
+    <body>
+        <h2 id="wallet">￦. 0</h2>
+        <div id='farm'>
+        <script>
+            for(i=0;i<set.x;i++){
+                farr[i]=new Array();
+                for(j=0;j<set.y;j++)
+                    createDIV(i,j);
+            }
+        </script>
+        </div>
+        <div id='newtria' onclick='hit()' style='display:none;'>* > ㅠ < *</div>
+	</body>
+</html>
+<script>
+    document.getElementById("farm").style.width=set.size*set.x+"px";
+    document.getElementById("farm").style.height=set.size*set.y+"px";
+    var grow = setInterval(function(){
+        var arr=[R(0,set.x),R(0,set.y)];
+        var obj=document.getElementById("p["+arr[0]+"]["+arr[1]+"]");
+        (++farr[arr[0]][arr[1]]<set.grow_step.length)
+        ?obj.innerHTML=set.grow_step[farr[arr[0]][arr[1]]]
+        :obj.innerHTML=set.grow_step[set.grow_step.length-1]+"+"+(farr[arr[0]][arr[1]]-set.grow_step.length+1);
+        obj.title=won(price(arr[0],arr[1]));
+    },1000);
+    var mcontrol = setInterval(function(){//나타나느냐??
+        (R(0,set.monster_time)==0&&document.getElementById("newtria").style.display=='none')?appearing():"";
+    },1000);
+    function appearing(){
+        console.log("monster appearing!!!");
+        document.getElementById("newtria").style.display="block";
+        monster = setInterval(function(){
+            miss(R(0,set.x),R(0,set.y));
+        },1000); 
+    }
+    function hit(){
+        set.hp[2]-=set.attack;
+        (set.hp[2]<=0)?monsterDIE():document.getElementById("newtria").style.width=(set.hp[2]/set.hp[1])*100+"%";
+    }
+    function monsterDIE(){
+        console.log("뉴트리아 죽음.");
+        clearInterval(monster);//뉴트리아 행동 정지.
+        document.getElementById("newtria").style.display="none";//화면상 가리기
+        set.hp[2]=set.hp[0];//현재체력 채워놓기
+        document.getElementById("newtria").style.width=100+"%"
+    }
+    function eat(x,y){
+        set.money+=price(x,y);
+        document.getElementById("wallet").innerHTML="￦. "+won(set.money);
+        farr[x][y]=0;
+        document.getElementById("p["+x+"]["+y+"]").innerHTML="";
+    }
+    function miss(x,y){
+        farr[x][y]=0;
+        document.getElementById("p["+x+"]["+y+"]").innerHTML="";
+    }
+    function price(x,y){//return int
+        var num=farr[x][y]-set.grow_step.length+2;
+        return((num>0)?Math.pow(num,2):0)*set.price;
+    }
+	function R(minrnum,maxrnum){
+        maxrnum--;
+  		return Math.round(Math.random()*(maxrnum-minrnum))+minrnum;
+    }
+    function won(x) {
+    	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+</script>

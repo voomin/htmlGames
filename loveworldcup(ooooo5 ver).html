@@ -1,0 +1,601 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - oooo5 worldcup</title>
+  
+  
+  
+  
+      <style>
+      
+html, body {
+  width: 100%; 
+  margin-left: auto; margin-right: auto;
+  text-align:center;
+  color:#333;
+  background: #3C37E6;
+  background: -webkit-linear-gradient(to left, #3C37E6 , #2126E0);
+  background: linear-gradient(to left, #3C37E6 , #2126E0);
+  -webkit-font-smoothing: antialiased;
+  justify-content: center;
+  display: table;
+  align-items: center;
+}
+@media screen and (max-width:768px) {
+  body {
+  }
+}
+h1 {
+  height: 100px;
+  margin-bottom:40px;
+}
+
+h1 span {
+  position: relative;
+  top: 20px;
+  display: inline-block;
+  animation: bounce .9s ease infinite alternate;
+  font-family: 'Titan One', cursive;
+  font-size: 80px;
+  color: white;
+  text-shadow: 0 1px 0 #C12636,
+               0 2px 0 #C12636,
+               0 3px 0 #C12636,
+               0 4px 0 #C12636,
+               0 5px 0 #C12636,
+               0 6px 0 transparent,
+               0 7px 0 transparent,
+               0 8px 0 transparent,
+               0 9px 0 transparent,
+               0 10px 10px rgba(0, 0, 0, .4);
+}
+
+h1 span:nth-child(2) { animation-delay: .1s; }
+h1 span:nth-child(3) { animation-delay: .2s; }
+h1 span:nth-child(4) { animation-delay: .3s; }
+h1 span:nth-child(5) { animation-delay: .4s; }
+h1 span:nth-child(6) { animation-delay: .5s; }
+h1 span:nth-child(7) { animation-delay: .6s; }
+h1 span:nth-child(8) { animation-delay: .7s; }
+
+@keyframes bounce {
+  100% {
+    top: -20px;
+    text-shadow: 0 1px 0 #C12636,
+                 0 2px 0 #C12636,
+                 0 3px 0 #C12636,
+                 0 4px 0 #C12636,
+                 0 5px 0 #C12636,
+                 0 6px 0 #C12636,
+                 0 7px 0 #C12636,
+                 0 8px 0 #C12636,
+                 0 9px 0 #C12636,
+                 0 50px 25px rgba(0, 0, 0, .2);
+  }
+}
+/*---------------------아래서부터 내가 코드 짠거다 2016.11.34*/
+.hide-a { margin: 0 auto; display: block; width: 390px; 
+  text-decoration:none;/* a 태그 아랫줄 없애는거*/
+}
+ul{
+    padding: 0px;
+    overflow: auto;
+}
+li{
+  text-align:center;
+  font-family: 'Raleway', sans-serif; /* font*/
+    list-style:none; /* li점 없애는거*/
+    width: 250px;
+    height: 100px;
+    border: 5px solid #333;
+    font-size:17px;
+    font-weight: 800; /* font 두께*/
+    margin: 0px auto;/* li가운데 정렬*/
+    padding-left: 0px;/* 옆에left 공간 */
+    cursor: pointer;/* 마우스 커서 */
+    color:white;
+    background:#1E997A;
+  
+  }
+li:hover { /* 마우스 커서 올라 갔을때 반응하는 */
+    background:#EA6C48;
+    border: 5px solid white;
+    color:#F7BF82;
+    width:425px;
+}
+footer{
+  margin-top:100px;
+  font-size:14px;
+  text-align:left;
+  margin-bottom:40px;
+  color:#0072ff;
+}
+#footlb{
+  margin-left:15px;
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 10px solid gold;
+    margin: 1em 0;
+    padding: 0; 
+}
+#playboard{
+  margin-top:40px;
+  margin-left:40px; margin-right:40px;
+    height:100%;
+    border: 10px solid #F0CF61;
+    text-align:center;
+    color:black;
+    background:#F0CF61;
+}
+#percent{
+  font-size:100px;
+  font-weight: normal;
+}
+#percentmark{
+  font-size:20px;
+      font-weight: 900;
+}
+#percent:hover {
+  onclick
+}
+
+#btns{
+  width:100%;
+}
+#scan{
+  width:100%;
+  font-size:27px;
+  text-align:right;
+  color:#333;
+}
+.ciclebtn{
+   width:100%;
+    list-style:none; /* li점 없애는거*/
+    padding-left: 0px;/* 옆에left 공간 */
+    cursor: pointer;/* 마우스 커서 */
+    text-align:center;
+    color:white;
+  
+ height:50px;
+ border-radius:25px;
+ -moz-border-radius : 25px;
+ -webkit-border-radius : 25px;
+ -ms-border-radius :25px;
+ -khtml-border-radius : 25px;
+ -o-border-radius :25px;
+ text-align:center;
+}
+/* worldcup css*/
+.worldcupimg{
+  width:200px;
+  max-height:270px;
+  min-height:180px;
+  margin-bottom:40px;
+}
+/* amho css */
+.amho-btn{
+}
+@media screen and (min-width:600px) {/*600보다 큰화면일경우*/
+ #playboard{
+  margin-left:100px; margin-right:100px;
+  }
+  #scan{
+  font-size:50px;
+  }
+}/*screen and ------------*/
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  <title>ooooo5</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <a class="hide-a" href="http://www.ooooo5.com:8080/">
+  <h1>
+  <span>o</span>
+  <span>o</span>
+  <span>o</span>
+  <span>o</span>
+  <span>o</span>
+  <span>5</span>
+  </h1>
+  </a>
+</head>
+<body>
+  <ul id="project-list" style="display:none">
+    <li onclick="play(0)"> min2 game heaven</li>
+    <li onclick="play(1)"> life game</li>
+    <li onclick="play(2)"> world cup</li>
+    <li onclick="play(3)"> one piece</li>
+    <li onclick="play(4)"> Amho</li>
+    <li onclick="play(5)"> fullcalc</li>
+    <li onclick="play(6)"> Army check</li>
+    <li onclick="play(7)"> youtubelist</li>
+    <li onclick="play(8)"> Time control</li>
+  </ul>
+  <div id="playboard" >
+    <div id="worldcupboard"><!-- worldcupboard start line-->
+      <h2 id="h2">이상형 월드컵</h2>
+      <img class="worldcupimg" id="imgX" src="" onclick="clickimg(0)"  style="" alt="사진 대기중..." />
+      <img class="worldcupimg" id="imgY" src="" onclick="clickimg(1)" style="" alt="사진 대기중..." />
+      </div><!-- worldcupboard end line-->
+    
+    
+</div><!-- playboard end line-->
+</body>
+<footer>
+ <hr>
+  <label id="footlb">
+  Copyright @ <a href="https://www.instagram.com/voomin/" style="color:#777;text-decoration:none;">instagram</a> 15-76090058. All right ( Am 6:12 ~ Am 25:3 / server on )
+    </label>
+</footer>
+  
+  
+    <script >
+    window.onload=function(){
+}
+function play(playnum){
+  document.getElementById("playboard").style.display='block';
+  switch(playnum){
+    case 0:min2gameheavenfx();
+      break;
+    case 1:min2gameheavenfx();
+      break;
+    case 2:worldcupviewfx();
+      break;
+    case 3:min2gameheavenfx();
+      break;
+    case 4:amhoviewfx();
+      break;
+    case 5:min2gameheavenfx();
+      break;
+    case 6:Armycheckview();
+      break;
+      
+         }
+}
+function min2gameheavenview(){
+}
+function lifegameview(){
+}
+function amhoviewfx(){
+  document.getElementById("amhoboard").style.display='block';
+}
+function worldcupviewfx(){
+  document.getElementById("worldcupboard").style.display='block';
+}
+function Armycheckview(){
+  document.getElementById("Armycheckboard").style.display='block';
+}
+
+/////////////////////armycheck start
+var md=["",31,28,31,30,31,30,31,31,30,31,30,31];
+function today(){
+   var date = new Date();
+        var year  = date.getFullYear();
+        var month = date.getMonth() + 1; // 0부터 시작하므로 1더함 더함
+        var day   = date.getDate();
+        if (("" + month).length == 1) { month = "0" + month; }
+        if (("" + day).length   == 1) { day   = "0" + day;   }
+return year+""+month+""+day;
+}
+function zerop(int){
+  if(int<10){int="0"+int;}
+  return int+"";
+}
+function dayday(x,y,m){//날짜사이의 격차 m=몇개월 뒤
+  var xyy=x.slice(0,2);
+	var xmm=x.slice(2,4);
+	var xdd=x.slice(4,6);
+  var yyy=y.slice(0,2);
+	var ymm=y.slice(2,4);
+	var ydd=y.slice(4,6);
+  if(m!=0){// 몇개월 뒤를 보여준다
+      xmm=parseInt(xmm)+m;
+      xdd=parseInt(xdd)-1;
+      while(xmm>12){xmm-=12;xyy=parseInt(xyy)+1;}
+      //if(xdd<1){xmm--;}
+      return zerop(xyy)+zerop(xmm)+zerop(xdd);
+     }
+  var day=0;
+  xyy=parseInt(xyy);
+  xmm=parseInt(xmm);
+  xdd=parseInt(xdd);
+  yyy=parseInt(yyy);
+  ydd=parseInt(ydd);
+  ymm=parseInt(ymm);
+  while(x!=y){if(day>3000){break;}//방지 3000일제한
+    ydd++;day++;
+    if(yyy%4==0){md[2]=29;}
+    else{md[2]=28;}    
+    if(ydd>md[ymm]){ymm++;ydd=1;}
+    if(ymm>12){ymm=1;yyy++;}
+    y=zerop(yyy)+zerop(ymm)+zerop(ydd);
+  }
+  return day;
+}
+function golisten(num){
+  if(num==0){num=21;}
+  var ipday=document.getElementById("scan").value+"151207";//입력한날짜
+	document.getElementById("percent").innerHTML=go(ipday,num);
+}
+function go(ipday,service){
+	ipday=ipday.slice(0,6);
+  //if(parseInt(ipday.slice(0,2))<14){ipday="140000"}
+	document.getElementById("scan").value=ipday;
+  
+  
+  var todaystr=today(); todaystr=todaystr.slice(2)
+  var endstr=dayday(ipday,"",service);
+  var totalday=dayday(endstr,ipday,0);
+  var bokmu=dayday(todaystr,ipday,0);//복무일수
+	
+  //document.getElementById("endlb").innerHTML=endstr;
+  //document.getElementById("totallb").innerHTML=totalday;
+  //document.getElementById("lb0").innerHTML=totalday-bokmu;
+  //document.getElementById("lb1").innerHTML=bokmu;
+  
+  var infor="전     역: "+endstr+"\n총복무일 : "+totalday+"일\n복무일수 : "+bokmu+"일\n남은일수 : "+(totalday-bokmu)+"일";
+  document.getElementById("percent").title=infor;
+  var percent=(bokmu/totalday)*100+"";
+  //document.getElementById("lb2").innerHTML=percent.slice(0,5)+"%";
+  return percent.slice(0,5);
+}
+/////////////////////armycheck end
+
+////////////////////worldcup start
+
+var girlname=["설리","모모","현아","쯔위","민아",//5
+              "송지효","김태희","전지현","이수민","한효주",//10
+              "박보영","손연재","김연아","강민경","전효성",//15
+              "신민아","이국주","박나래","장도연","나나",//20
+              "하연수","수지","한가인","설현","김세정",//25
+              "강예빈","유빈","제시","아이린","다현",//30
+              "하니","민효린","솔비","육지담","최유정",//31,32,33,34,35
+              "헤이즈"
+             ];
+var girlip=["http://i.huffpost.com/gen/3702352/images/o-JIN_RI_SUL-facebook.jpg",
+            "http://ext.fmkorea.com/files/attach/new/20160206/3655109/27799179/307469765/b317970813ee5c5887a4d1bf087aec8d.png",
+            "http://sccdn.chosun.com/news/html/2016/02/05/2016020601000574000035171.jpg",//현아
+            "https://bada.wiki/images/a/ae/twice_tzuyu.jpg",//
+            "http://ext.fmkorea.com/files/attach/new/20160228/3655109/67112935/323539556/69be63c86bfd5bad866e8a1ef9127d13.jpg",
+            //5
+            "http://cfile27.uf.tistory.com/image/250C7E3C53F712E621CB52",
+            "http://mblogthumb1.phinf.naver.net/20120328_288/dugot1004_1332935452172gi5bP_GIF/605.gif?type=w2",
+            "https://pbs.twimg.com/profile_images/551251557707051008/gp9TV_7L.jpeg",
+            "http://image.chosun.com/sitedata/image/201607/01/2016070101488_0.jpg",
+            "http://www.zenithnews.com/news/photo/201604/38250_36362_5040.jpg",
+            //5
+            "http://cfile23.uf.tistory.com/image/230B344B56449DD80E0475",
+            "https://img.sbs.co.kr/newimg/news/20150226/200815685_700.jpg",
+            "http://www.fashionseoul.com/wp-content/uploads/2016/02/20160229_Kim-Yu-na_2.jpg",
+            "https://i.ytimg.com/vi/HeQIbjJmijo/maxresdefault.jpg",
+            "http://news.hankyung.com/nas_photo/201602/03.8802135.1.jpg",
+            //15
+            "https://www.taxtimes.co.kr/data/Article_images/2014/192424/192424_1.jpg",
+            "https://img.tf.co.kr/article/home/2014/07/30/20146821406687372.jpg",
+            "http://image.hankookilbo.com/i.aspx?Guid=d672641cf1c944769f23956f989ed53b&Month=201512&size=640",
+            "http://img.tenasia.hankyung.com/webwp_kr/wp-content/uploads/2016/09/2016092713385616774-540x810.jpg",
+            "https://1.bp.blogspot.com/-cLUDv92GQ_M/VARxy5JiiuI/AAAAAAAAL7o/xjJtHCHU8uY/s1600/%EB%82%98%EB%82%98dhc%ED%99%94%EB%B3%B4.jpg",
+            //20
+            "http://cfile27.uf.tistory.com/image/211EA73D579E5D74360D1D",
+            "https://image.elle.co.kr/upload/NEWS/2015/09/ncd_092485518/thumb/ncd_092485518_162147v_b.jpg",
+            "http://pds25.egloos.com/pds/201212/01/60/f0244460_50b9a74a47ade.jpg",
+            "https://spnimage.edaily.co.kr/images/photo/files/NP/S/2015/06/PS15061700129.jpg",
+            "http://cfile9.uf.tistory.com/image/266B454E56A2DD1236B716",
+            //25
+            "http://cfile1.uf.tistory.com/image/1508324450474DB7197873",
+            "https://s11.postimg.org/o01mfjow3/yjy_Rv_NH.jpg",
+            "http://image.fnnews.com/resource/media/image/2016/02/15/201602151049529578_l.jpg",
+            "https://i.ytimg.com/vi/FudLcsNjiWQ/maxresdefault.jpg",
+            "https://pbs.twimg.com/profile_images/662419409600811009/lRH4GDHK.jpg",
+            //30
+            "https://img.tf.co.kr/article/home/2016/01/01/201667531451624564.jpg",
+            "http://www.smileformen.com/files/attach/images/383/691/239/3bd08a65a5baf0bad93bbb2b3df27bd9.jpg",
+            "http://cfile25.uf.tistory.com/image/137F02335149643323A665",
+            "http://cfile5.uf.tistory.com/image/263AE74A5784C6DC048F63",
+            "http://cfile27.uf.tistory.com/image/21423841572E91E72A34C5",
+            //35
+            "http://dimg.donga.com/wps/SPORTS/IMAGE/2016/02/04/76324095.2.jpg",
+            "",
+            "",
+            "",
+            "",
+            //40
+            "",
+           ];// girl img address
+var stage=[];
+var stagelv=0;
+var count=2;
+var xnum=0,ynum=1;
+var cup=32;
+window.onload=function(){
+  setting();
+  viewimg("X",stage[0][0]);viewimg("Y",stage[0][1]);
+}
+function setting(){
+  var gang=cup;
+  while(gang>1){var newarr=[]; stage[stage.length]=newarr;gang/=2;}stage[stage.length]=new Array();
+  
+  var nc=[];//랜덤으로 중복되지않게 배열에 저장시키기
+  
+  
+  for(i=0;i<girlname.length;i++){nc[i]=i;}
+  
+  for(i=0;i<cup;i++){
+    var cc=R(nc.length-1);//nc=배열  ,cc=배열에 없앨주소
+    stage[stagelv][i]=nc[cc];
+    nc.splice(nc.indexOf(nc[cc]),1);
+  }
+  
+  xnum=stage[0][0];
+  ynum=stage[0][1];
+  //girlname=nc;
+  //girlip=nc;
+  //stage[0]=nc;
+  
+}
+function viewimg(xy,ipnum){
+  document.getElementById("img"+xy).src=girlip[ipnum];
+  document.getElementById("img"+xy).alt=girlname[ipnum];
+  document.getElementById("img"+xy).title=girlname[ipnum];
+}
+function imgwait(){
+  
+  document.getElementById("imgX").src="";
+  document.getElementById("imgX").alt="loading...";
+  
+  document.getElementById("imgY").src="";
+  document.getElementById("imgY").alt="loading...";
+}
+function clickimg(num){
+  if(stage[stagelv].length==1){end();}//끝인지 확인
+  imgwait();//wait img
+  
+  if(num==0){stage[stagelv+1][stage[stagelv+1].length]=xnum;}//내가 무엇을 골랏는지 저장
+  else if(num==1){stage[stagelv+1][stage[stagelv+1].length]=ynum;}
+  
+  xnum=stage[stagelv][count++];//next 이미지 보기위해
+  ynum=stage[stagelv][count++];
+ 
+  viewimg("X",xnum);//이미지 보여주기
+  viewimg("Y",ynum);
+  
+  if(stage[stagelv+1].length==stage[stagelv].length/2){stagelv++;count=0;clickimg()}//다음스테이지
+}
+function end(){//
+  document.getElementById("h2").innerHTML="goal!! "+girlname[stage[stagelv][0]];
+  viewimg("X",stage[stagelv][0]);
+  document.getElementById("imgY").style.display='none';
+}
+  function R(maxrn){
+  return Math.round(Math.random()*maxrn);
+}
+//////////////////////////////amho start
+var k=1;
+var amcount=1;//몇번 섞을지
+var strnum=["♥","콜",".",","," ","a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",  "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", , "가", "나", "다", "라", "마", "바", "사", "아", "자", "차", "카", "타", "파", "하",, "아", "야", "어", "여", "오", "요", "우", "유", "으", "이", "의", "현", "동", "해","알","로", "물", "과", "백", "두", "산", "마", "르", "고", "닳", "도", "록", "느", "님","\n","장", "하", "시", "젠", "발", "보", "평", "붉", "ㄴ", "ㄷ", "ㄻ", "ㄱ", "ㅁ", "ㄼ", "ㅄ", "ㅅ", "ㅂ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "튶", "ㅍ", "ㅎ", "튜", "ㅍ", "ㅏ", "ㅑ", "ㅓ", "ㅕ", "ㅗ", "ㅛ", "ㅜ", "ㅠ", "ㅢ", "ㅣ", "ㅡ", "에", "헤", "야", "호", "머", "푸", "ㅔ", "왜", "외", "으", "아", "야", "어", "려", "오", "여", "요", "우", "유", "이","키","롤","로","쟁","죙","송","젠","솔","ㄹ","담", "러", "눙", "리", "믜", "랴", "베", "ㅐ", "뤼", "프", "눌", "미", "륻", "비", "뱌", "더", "버", ";", "래", "말", "대", "게", "싯", "지", "클", "랄", "젲", "좬", "료", "일", "루", "풰", "롹", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "|", "+", "ㅃ", "ㅉ", "ㄸ", "ㄲ", "ㅆ", "{", "ㅖ", "ㅒ", "쑈", "쎠", "<", "퓨", ":", "ㅟ","/", ">", "`","Q", "W", "E", "R", "A", "D", "F", "Z", "V", "X", "C", "B", "M", "N", "L", "K", "G", "H", "J", "P", "O", "Y", "U", "I", "T","람", "처", "럼", "스", "쳐", "는","있", "데", "린", "털", "돈", "금", "박", "치", "기", "초", "와", "누", "깃","한", "글", "은", "첫", "닿", "소", "홀", "및", "받", "침", "조", "합", "완", "성", "할", "수", "총", "낱", "내", "'", "니", "꼴", "용", "전", "세", "종", "왕", "념", "업", "회","년", "중", "반", "부", "터", "개", "인", "컴", "서", "워", "드", "그", "램", "석", "·", "원", "벗", "텔", "레", "디", "등", "몇", "긴", "였", "본", "격", "적", "국", "입", "‘", "’", "불", "", "음", "찬", "진", "김", "형", "집", "식", "울", "선", "후", "배", "모", "만", "들", "작", "되", "었", "를", "설", "립", "판", "매", "S", "을", "거","윈", "계", "속", "왔", "태", "경", "영", "악", "화", "때", "각", "언", "론", "팔", "민", "살", "운", "행", "히", "새", "맞", "출", "명", "령", "방", "쇄", "된", "결", "면", "같", "양", "싱", "구", "간", "젬", "피", "져", "했", "무", "덤", "핑", "없", "재", "상", "점", "율", "랑", "손", "꼽", "며", "-", "분", "멀", "티", "플", "랫", "폼", "문", "품", "쓰", "관", "볼", "정", "표", "법", "충", "낼", "독", "특", "트", "웨", "족", "권", "제", "실", "①", "체", "벳", "것", "므", "포", "함", "즉", "런", "예", "란", "랍", "달", "②", "든", "길", "짜", "좋", "많", "흔", "않", "능", "단", "필", "켜","신", "토", "옛", "생", "력", "잃", "별", "급", "저", "뀔", "른", "꽃", "밭", "꼬", "빠", "○", "슨", "책", "또", "못", "량", "확", "징", "곤", "술", "뛰", "복", "잡", "존", "흉", "건", "따", "노", "[", "네", "]", "학", "앙", "연", "름", "써", "위", "임", "창", "당", "훈", "訓", "民", "正", "音", "절", "反", "切", "암", "갸", "주", "논", "엔", "크", "섞", "붙", "안", "뉘", "될", "×", "=", "공", "통", "ㅌ", "쌍", "ㄳ", "ㄶ", "ㄵ", "ㄺ", "ㄽ", "ㄿ", "ㄾ", "ㅀ", "ᇚ", "늘", "날", "례", "순", "둥", "ㅘ", "ㅚ", "ㅝ", "ㅙ", "ㅞ", "윤", "곽", "줄", "덧", "강", "짧", "곧", "뮐", "페", "됬", "퍼", "킹", "킬","캬","셋","넷","둘","감"];
+var jum="O",shim="l",haha=384;
+var show="";
+
+ function kjob(){
+  k=document.getElementById("key").value+strnum.length*haha;
+}
+function scanslisten(){
+  kjob();
+ document.getElementById("scans2").value=am(document.getElementById("scans").value);
+  document.getElementById("scans").value="";//안보여주기
+  document.getElementById("key").value="";//안보여주기
+  document.getElementById("status").innerHTML="--"
+}
+function scans2listen(){
+   kjob();
+  document.getElementById("scans").value=resolve(document.getElementById("scans2").value);
+  document.getElementById("status").innerHTML="해독 완료"
+}
+
+function resolve(str){
+   show="";
+  var rei=0;
+  var basket=0;
+  while(str!=""){rei++
+    if(str.slice(rei,rei+1)==jum){//점
+      basket=parseInt(str.slice(0,rei));//기본숫자로
+      //basket=tenjinso(str.slice(0,rei));//진수로
+      str=str.slice(rei+1);rei=0;
+    }if(str.slice(rei,rei+1)==shim){//쉼
+      basket+=parseInt(str.slice(0,rei));//기본숫자로
+     //basket+=tenjinso(str.slice(0,rei));//진수로
+       show+=string(basket);
+      str=str.slice(rei+1);rei=0;basket=0;
+    }
+  }
+  return show;
+}
+function string(who){
+  return strnum[parseInt(who/k)];
+}
+function am(str){
+   show="";
+  for(nn=0;nn<str.length;nn++){
+   show+=int(str.slice(nn,nn+1));
+  }
+  return show;
+}
+function shake(snum){
+  var hol=R(snum);
+  return hol+jum+(snum-hol);//기본 숫자로
+  //return jinso(hol)+jum+jinso(snum-hol);//숫자말고
+}
+function int(who){
+  for(i=0;i<strnum.length;i++){
+    if(who==strnum[i]){
+        return shake(i*k)+shim;//쉼
+    }
+  }
+  strnum[strnum.length]=who;//strnum에 포함되있지않은 문자 넣는코드
+  return shake((strnum.length)*k)+shim;//
+}
+function tenjinso(get){get=""+get;//
+  var lg=get.length,mitsl=strnum.length;
+  var givet=0;
+  for(e1=0;e1<lg;e1++){
+    for(e2=0;e2<mitsl;e2++){
+      if(strnum[e2]==get.slice(e1,e1+1)){
+        givet=givet+parseInt(jegob(mitsl,(lg-e1-1))*e2);
+      }
+    }
+  }
+  return givet;
+}
+function jinso(get){//
+  var we=1,mit=strnum.length;
+  var give="";
+    while(get/jegob(mit,we)>1){++we;}
+    for(f1=we;f1>0;f1--){
+      var mok=parseInt(get/jegob(mit,f1));
+      if(f1==we&&mok==0){}
+      else{
+        give+=strnum[mok];
+        get-=jegob(mit,f1)*mok;
+      }
+    }
+      give=give+strnum[get%mit];
+      return give;
+}
+function jegob(mit2,we2){
+  var anb=mit2;
+  if(we2<1){we2*=-1;
+     for(jgnum=0;jgnum<=we2;jgnum++){
+       mit2/=anb;
+      }
+  }else{
+    for(jgnum=1;jgnum<we2;jgnum++){
+      mit2*=anb;
+    }
+  }
+  return mit2;
+}
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 

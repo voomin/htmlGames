@@ -1,0 +1,65 @@
+﻿<style>
+#count{
+	text-align:right;
+	display:none;
+}
+</style>
+
+<html>
+<head>
+	<title>Lotto</title>
+</head>
+<body>
+	<h2 id='answer' onclick="reset()">##</h2>
+	<input id='count'></input><button onclick="buy()">Lotto</button>
+	<p id='txt'></p>
+</body>
+</html>
+<script>
+	var re_count=1;
+	var an;
+	var check;
+	reset();
+	function reset(){
+		var obj=document.getElementById("answer");
+		an=engine();
+		obj.innerHTML="Lotto [ "+re_count+++" ]회 : "+an;
+	}
+	function buy(){
+		var obj=document.getElementById("count");
+		var c=parseInt(obj.value);
+		obj.value=c;
+		
+		var obj=document.getElementById("txt");
+		check=engine();
+		
+		var count=0;
+		
+		for(i=0;i<check.length;i++){
+			for(j=0;j<an.length;j++){
+				if(parseInt(check[i])==parseInt(an[j])){
+					count++;
+				}
+			}
+		}
+		
+		var result_str=["꽝꽝꽝","꽝꽝","꽝","4등","3등","2등","1등"];		
+
+		
+		txt.innerHTML="[ "+result_str[count]+" ] "+check+"<br>"+txt.innerHTML;
+	}
+	function engine(){
+		var arr=[];
+		for(i=1;i<=45;i++){
+			arr.push(i);
+		}
+		var tos=[];
+		for(i=0;i<6;i++){
+			tos.push(arr.splice(R(arr.length-1),1));
+		}
+		return tos;
+	}
+	function R(Rnum){
+		return Math.round(Math.random()*Rnum);
+	}
+</script>

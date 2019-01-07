@@ -1,0 +1,61 @@
+<html>
+<head>
+    <title>데이터 학습</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+        }
+        .space *{
+            position: absolute;
+        }
+        .x_axis{
+            width:100%;
+            border:1px solid #aaa;
+        }
+        .y_axis{
+            height:100%;
+            border:1px solid #aaa;
+        }
+        .p{
+            border:1px solid #333;
+        }
+        </style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="space">
+    </div>
+</body>
+</html>
+<script>
+    var zp={
+        x:500,
+        y:500
+    };
+    var fx={
+        a:-3,
+        b:20
+    }
+    $(".space").append(
+        "<div class='x_axis'></div>"
+        +"<div class='y_axis'></div>"
+        );
+    $(".x_axis").offset({top: zp.x});
+    $(".y_axis").offset({left: zp.y});
+    var point=function(x,y){//점 찍기
+        $(".space").append("<div class='p' id='x"+x+"'></div>");
+        $("#x"+x).offset(
+            {
+                left: x+zp.x,
+                top:zp.y-y
+            }
+        );
+    }
+    var line=function(a,b){//선그리기 1차함수
+        for(i=-100;i<=100;i++){
+            point(i,a*i+b);
+        }
+    }
+    line(3,20);
+</script>

@@ -1,0 +1,55 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+    body{
+        text-align: center;
+    }
+    input{
+        text-align: right;
+    }
+    button{
+        margin:50px;
+        width:30%;
+        height:30%;
+    }
+</style>
+</head>
+<body>
+    <input class="m" type="number"> 분<br>
+    <h2 class="timeView"></h2>
+    <button>Go</button>
+</body>
+</html>
+<script>
+    var time=null;
+    var thread=null;
+    $(function(){
+        $("button").click(function(){
+            init();
+        });
+    });
+    function init(){
+        if(thread==null){
+            if($(".m").val()!=0){
+                time=$(".m").val();
+                time=parseInt(time)*60;
+            }
+            if(time!=null)
+            thread=setInterval(move,1000);
+        }
+        else{
+            clearInterval(thread);
+            thread=null;
+        }
+        $(".m").val("");
+    }
+    function move(){
+        time--;
+        $(".timeView").html(time);
+        if(time<=0){
+            var audio = new Audio('/Users/Kimjueun/Music/alarm/nature.mp3');
+            audio.play();
+        }
+    }
+</script>

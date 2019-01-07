@@ -1,0 +1,60 @@
+﻿<style>
+    body{
+        text-align:center;
+    }
+h3{	color:#333;
+	background-color:gray;
+
+}
+h3:hover{
+	background-color:white;
+}
+</style>
+<html>
+    <body>
+        <h1 id='count'>0</h1>
+	<h2 id='result'>##</h2>
+        <input id='scan' placeholder="1 ~ 100 사이의 숫자"/><button id='str_btn' onclick='go()'>start</button>
+	<h3 id='answer'>?</h3>
+    </body>
+</html>
+<script>
+	var x={
+		answer:-1,
+		num:-1,
+		top:-1,
+		min:-1,
+		stop:0,
+		count:1,
+		check:function(){
+			x.num=Math.round(Math.random()*(x.top-x.min))+x.min;
+			document.getElementById('count').innerHTML=x.count++;
+			if(x.answer==x.num){
+				x.stop=1;
+				return '정답입니다.';
+			}else if(x.answer>x.num){
+				x.min=x.num;
+				return x.num+'보다 크다';
+			}else{
+				x.top=x.num;
+				return x.num+'보다 작다';
+			}
+		}
+	
+	}	
+
+	function go(){	
+		document.getElementById('scan').style.display='none';
+		document.getElementById('str_btn').style.display='none';
+	
+		x.answer=parseInt(document.getElementById('scan').value);
+		x.top=100;
+		x.min=1;
+	
+		document.getElementById('answer').innerHTML=x.answer;
+	
+		setInterval(function(){
+			(x.stop)?'':document.getElementById('result').innerHTML=x.check();
+		}, 1000);
+	}
+</script>

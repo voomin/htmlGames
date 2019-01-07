@@ -1,0 +1,96 @@
+﻿<style>
+    body{
+        margin: 0 auto;
+        padding:0 auto;
+        display: table;
+    }
+</style>
+<html>
+	<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title></title>
+	</head>
+    <body>
+        
+        <table>
+            <tr><td colspan="2">내 원금 : <input id="startMoney" value="1,000,000"></input></td></tr>
+            <tr>
+                <td>매수 금액 : 
+                    <input id="buyMoney" placeholder="매수 금액" value="0"></input>
+                </td>
+                <td>매도 금액 : 
+                   <input id="soldMoney" placeholder="매도 금액" value="0"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>총 자산 : </td>
+                <td id="totalMoney"></td>
+            </tr>
+            <tr>
+                <td>순수 수익 : </td>
+                <td id="plusMoney"></td>
+            </tr>
+            <tr>
+                <td>+원하는 수익 : 
+                    <input id="hopeMoney" placeholder="목표 수익" value="0">
+                </td>
+                <td id="result">매도해야할 금액 :</td>
+            </tr>
+        </table>
+
+	</body>
+</html>
+<script>
+    var startM;//원금
+    var buyM;//매수 액
+    var soldM;//매도 액
+    var totalM;//총 자산
+    var hopeM;//원하는 수익금
+	$(document).ready(function(){
+		$("#buyMoney").change(function(){
+            $(this).val(won(int($(this).val())));
+            calc();
+            soldPlan();
+		});
+		$("#soldMoney").change(function(){
+            $(this).val(won(int($(this).val())));
+            calc();
+            //soldPlan();
+		});
+		$("#startMoney").change(function(){
+            $(this).val(won(int($(this).val())));
+            calc();
+            soldPlan();
+        });
+		$("#hopeMoney").change(function(){
+            $(this).val(won(int($(this).val())));
+            soldPlan();
+		});
+
+    });
+    function soldPlan(){
+        hopeM=int($("#hopeMoney").val());
+        var str="매도해야할 금액 : "+(hopeM+startM)*buyM/startM;
+        $("#result").html(str);
+        //console.log("sold plan");
+    }
+    function calc(){
+        startM=int($("#startMoney").val());
+        buyM=int($("#buyMoney").val());
+        soldM=int($("#soldMoney").val());
+        
+        totalM=parseInt(startM*soldM/buyM);
+        //console.log(startM+","+buyM+","+soldM);
+        
+        $("#totalMoney").html(won(totalM));
+        $("#plusMoney").html(won(totalM-startM));
+    }
+    function int(x){
+        x=x.replace(/,/gi, "");
+        
+        return parseInt(x);
+    }
+    function won(x) {
+    	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+</script>

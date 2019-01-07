@@ -1,0 +1,97 @@
+﻿<style>
+body{
+	margin:0 auto;
+	padding:0 auto;
+	display:table;
+}
+#map{
+	width:1000px;
+	height:500px;
+	border:1px solid #333;
+}
+.hol{
+	position:absolute;
+	font-weight:bold;
+	color:white;
+	text-align:right;
+	width:10px;
+	height:20px;
+}
+#status{
+	cursor:pointer;
+}
+</style>
+<html>
+	<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		var colors=["red","orange","silver","gold","green","blue","pink","navy","purple"];
+		var x=[];
+	</script>
+	</head>
+    <body>
+		<h1 id="status" onclick="click_play()">Start??</h1>
+		<div id="map">
+			<script>
+				document.getElementById("map").style.height=(colors.length*50+30)+"px";
+				x["status"]=0;
+				for(i in colors){
+					document.write("<div class='hol' id='hol"+i+"' style='margin-top:"+(30+i*50)+"px; background-color:"+colors[i]+"'></div>");
+					x[i]=5;
+				}
+			</script>
+		</div>
+	</body>
+</html>
+<script>
+	var rank=1;
+	var run;
+	var stop=0;
+	function click_play(){
+		if(isNaN(run)||stop){
+			play();
+			stop=0;
+		}
+		else
+			stop_fx();
+	}
+	function stop_fx(){
+		clearInterval(run);
+		stop=1;
+	}
+	function play(){
+		run=setInterval(function(){
+			for(i in colors){
+				x[i]+=R(0,5);
+				if(x[i]>=1000){
+					x[i]=1000;
+					if(document.getElementById("hol"+i).innerHTML=="")
+					document.getElementById("hol"+i).innerHTML=rank++;
+				}
+				document.getElementById("hol"+i).style.width=x[i]+"px";
+			}
+			x["status"]+=R(0,5);
+			if(x["status"]>=900)
+				x["status"]=900;
+			document.getElementById("status").style.marginLeft=x["status"]+"px";
+			if(rank==colors.length)
+				stop_fx();
+		},100);
+	}
+	$(document).ready(function(){
+		$("#status").hover(function(){
+			if(isNaN(run))
+			document.getElementById("status").innerHTML="Start!!"
+			else
+			document.getElementById("status").innerHTML="Stop!!"
+			}, function(){
+			if(isNaN(run))
+			document.getElementById("status").innerHTML="Start??"
+			else
+			document.getElementById("status").innerHTML="Stop??"
+		});
+	});
+	function R(minrnum,maxrnum){
+  		return Math.round(Math.random()*(maxrnum-minrnum))+minrnum;
+	}
+</script>
