@@ -1,0 +1,30 @@
+<script>
+function solution(board){
+	var answer=0;
+	for(y=0;y<board.length;y++){
+		for(x=0;x<board[0].length;x++){
+			if(board[y][x]){
+				for(z=Math.sqrt(answer);z<board[0].length;z++){
+					if(y+z>=board.length||x+z>=board[0].length){break;}
+					if(check([y,x],[y+z,x+z])){
+                        answer=(z+1)*(z+1);
+                    }
+				}
+			}
+		}
+	}
+	return answer;
+    
+       function check(point1,point2){
+         //console.log(point1+":"+point2+"num="+num);
+         //if(point2[1]-point1[1]<Math.sqrt(answer)-1){return false;}
+        if(point2[0]>=board.length){return false;}
+            for(i=point1[0];i<=point2[0];i++){
+                for(ii=point1[1];ii<=point2[1];ii++){
+                    if(!board[i][ii]){return false;}
+                }
+            }
+            return true;
+        }//c
+}
+</script>

@@ -1,0 +1,41 @@
+<script>
+    function f(num){//factorial
+        var result=1;
+        if(num==0)
+            return 1;
+        for(i=1;i<=num;i++){
+            result*=i;
+        }
+        return result;
+    }
+    function C(n,r){
+        return f(n)/(f(r)*f(n-r));
+    }
+    function H(n,r){
+        return C(n+r-1,r);
+    }
+var gcd = (a, b) => (b % a === 0) ? a : gcd(b % a, a);
+var lcm = (a, b) => a * b / gcd(a, b);
+var nlcm = num => num.sort().reduce((a, b) => lcm(a, b));
+
+function fx(num,coin){
+    var total=0;
+    var arr=[];
+    for(i=0;i<coin.length;i++){
+        total+=coin[i];
+        arr.push(coin[i]);
+    }
+    num-total;
+}
+    function change(total, coin) {
+        var answer = 0;
+        
+        return answer;
+    }
+
+// 아래는 테스트로 출력해 보기 위한 코드입니다.
+console.log(change(5, [ 1, 2, 5 ]));
+// 아래는 테스트로 출력해 보기 위한 코드입니다.
+console.log(change(5, [ 1, 2, 5 ]));
+console.log(change(1000,[23,1,13,20,36,43,19,7,5]));
+</script>

@@ -1,0 +1,46 @@
+<script type="text/javascript">
+    function chooseCity(n,city)
+    {
+        var center=parseInt(city.length/2);
+        var min=air(center);
+        var answer=center;
+        for(var i=1;i<city.length;i++){
+            if(i%2==0){i*=-1;}
+            center+=i;
+            var airno=center;
+            if(airno>=city.length){airno=0;}
+            //console.log(airno+"airno");
+            var airnum=air(airno);
+            //console.log(airnum+"= airnum, airno ="+airno);
+            if(airnum<=min&&tCity[answer][0]>tCity[airno][0]){
+                min=airnum;
+                answer=airno;
+            };
+            i=Math.abs(i);
+            //console.log(airnum+"=air("+airno+")");
+            //if(airnum!="x"){console.log(airnum+"=air("+airno+")");}
+        }
+        return tCity[answer][0];
+        function air(no){
+            var sum=0;
+            for(var a=city.length-1;a>=0;a--){
+                sum=sum+city[a][1]*Math.abs(city[no][0]-city[a][0]);
+                //console.log(sum+":sum, min="+min);
+                if(sum>min){return "x";}
+            }//for
+            return sum;
+        }//air
+    }
+
+//아래 코드는 테스트를 위한 출력 코드 입니다.
+var tA = 3,
+    //tCity = [[0,1]];
+//[[1,2],[3,4],[6,2],[7,6],[8,5],[10,8]];//[[1,5],[2,2],[3,3]];
+    tCity=[];
+    for(i=0;i<100;i++){
+        var arr=[Math.pow(i+1,2),Math.round(Math.random()*1000)];
+        tCity[i]=arr;
+    }
+
+console.log(chooseCity(tA,tCity));
+</script>

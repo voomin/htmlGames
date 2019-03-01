@@ -1,0 +1,36 @@
+<script>
+    var main=0;
+    var answer=0;
+    function stack(){
+        this.number=0;
+        this.arr=[];
+        this.push=function(num){
+            this.number+=num;
+            this.arr.push(num);
+            if(this.number==main){
+                answer++;
+                console.log(this.arr);
+            }
+        }
+        this.pop=function(){
+            this.number-=this.arr[this.arr.length-1];
+            this.arr.pop();
+        }
+    }
+    function fx(coin,s){
+        main=s;
+        coin.sort((a,b)=>a-b);
+        var length=parseInt(s/coin[1]);
+        console.log(length+"length")
+        var arr=new stack();
+        for(j in coin){
+            arr.push(coin[j]);
+            for(i in coin){
+                arr.push(coin[i]);
+                arr.pop();
+            }
+            arr.pop();
+        }
+    }
+console.log(fx([0,1,2],2));
+</script>

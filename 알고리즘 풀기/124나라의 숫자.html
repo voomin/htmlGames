@@ -1,0 +1,28 @@
+<script type="text/javascript">
+    function change124(n) {
+        var answer="";
+        var n124=["","1","2","4"];
+        while(1){
+            switch(n%3){
+                case 1: answer="1"+answer;
+                break;
+                case 2: answer="2"+answer;
+                break;
+                case 0: answer="4"+answer;
+                break;
+            }
+            var num=Math.ceil(n/3)-1;
+            if(num>3){
+                n=num;
+            }//if
+            else{
+                answer=n124[num]+answer;
+                break;
+            }
+        }//while
+        return answer;
+    }
+
+// 아래는 테스트로 출력해 보기 위한 코드입니다.
+console.log(change124(15));
+</script>
